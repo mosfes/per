@@ -1,0 +1,60 @@
+<%- include('template/admin_header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center g-4">
+
+        <div class="col-md-12 col-lg-4">
+            <a href="/admin/buildings" class="text-decoration-none text-dark">
+                <div class="card shadow-sm h-100 text-center p-4 border-0 rounded-4 card-hover-simple">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <div class="icon-circle bg-success-subtle mb-4">
+                            <i class="far fa-building fa-2x" style="color: #000000;"></i> 
+                        </div>
+                        
+                        <h4 class="card-title fw-bold mb-2">อาคาร</h4>
+                        <p class="text-muted mb-4">จัดการอาคารของคณะ</p>
+                        
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <div class="col-md-12 col-lg-4">
+            <a href="/admin/equipment" class="text-decoration-none text-dark">
+                <div class="card shadow-sm h-100 text-center p-4 border-0 rounded-4 card-hover-simple">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <div class="icon-circle bg-info-subtle mb-4">
+                            <i class="fas fa-tv fa-2x" style="color: #000000;"></i> 
+                        </div>
+                        
+                        <h4 class="card-title fw-bold mb-2">อุปกรณ์</h4>
+                        <p class="text-muted mb-4">จัดการอุปกรณ์ของคณะ</p>
+
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .icon-circle {
+        width: 100px; 
+        height: 100px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+    }
+
+    .card-hover-simple {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .card-hover-simple:hover {
+        transform: translateY(-3px); 
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important; 
+    }
+</style>
+
+<%- include('template/admin_footer') %>

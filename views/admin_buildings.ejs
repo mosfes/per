@@ -1,0 +1,49 @@
+<%- include('template/admin_header') %>
+
+<div class="container">
+
+  <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+    <h1 class="mb-0">หน้าอาคารAdmin</h1>
+    
+    <a href="#" class="btn btn-primary">
+      <i class="fas fa-plus"></i> เพิ่มอาคาร
+    </a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+      
+      <thead class="table-dark text-center">
+        <tr>
+          <th scope="col">ชื่ออาคาร</th>
+          <th scope="col" style="width: 20%;">จำนวนชั้น</th>
+          <th scope="col" style="width: 20%;">จัดการ</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+
+        <tr>
+          <td>อาคาร 1 (อาคารเรียนรวม)</td>
+          <td class="text-center">5</td>
+          <td class="text-center">
+            <button class="btn btn-warning btn-sm">แก้ไข</button>
+            <button class="btn btn-danger btn-sm">ลบ</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>อาคาร 2 (อาคารสำนักงาน)</td>
+          <td class="text-center">3</td>
+          <td class="text-center">
+            <button class="btn btn-warning btn-sm">แก้ไข</button>
+            <button class="btn btn-danger btn-sm">ลบ</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('template/admin_footer') %>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - ระบบแจ้งซ่อมออนไลน์</title>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* CSS ของคุณยังคงทำงานได้ดี */
+        .divider:after,
+        .divider:before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #eee;
+        }
+
+        .h-custom {
+            height: calc(100% - 73px);
+        }
+
+        @media (max-width: 450px) {
+            .h-custom {
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="vh-100 gradient-custom mb-5">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card text-white login shadow-lg" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+
+                            <img class="w-50 mb-4" src="images/logo.png" alt="Logo วิทยาลัยการคอมพิวเตอร์">
+
+                            <h2 class="fw-bold mb-2">เข้าสู่ระบบ</h2>
+                            <p class="text-white-50 mb-5">ระบบแจ้งซ่อมออนไลน์วิทยาลัยการคอมพิวเตอร์</p>
+
+                            <form action="#" method="POST">
+
+                                <div class="form-group text-start mb-4">
+                                    <label class="form-label" for="typeEmailX">ผู้ใช้ (Username)</label>
+                                    <input type="email" id="typeEmailX" class="form-control form-control-lg"
+                                        placeholder="รหัสนักศึกษาหรือชื่อผู้ใช้" required />
+                                </div>
+
+                                <div class="form-group text-start mb-4">
+                                    <label class="form-label" for="typePasswordX">รหัสผ่าน</label>
+                                    <input type="password" id="typePasswordX" class="form-control form-control-lg"
+                                        placeholder="รหัสผ่าน" required />
+                                </div>
+
+                                <p class="small mb-4 text-end"><a class="text-white-50" href="#!">ลืมรหัสผ่าน?</a></p>
+
+                                <div class="d-grid gap-2 mb-4">
+                                    <button class="btn btn-outline-light btn-lg px-5"
+                                        type="submit">เข้าสู่ระบบ</button>
+                                </div>
+
+                            </form>
+
+                            <hr class="my-4" style="color: #eee;">
+
+                            <div class="text-center">
+                                <p class="mb-0">ติดต่อผู้ดูแลระบบ <a href="#!" class="text-white-50 fw-bold">คลิกที่นี่</a>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

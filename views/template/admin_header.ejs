@@ -12,8 +12,6 @@
     integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    
-
 </head>
 
 <body>
@@ -34,13 +32,16 @@
 
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link <%= (activePage === 'home') ? 'active' : '' %>"" href="/home">หน้าแรก</a>
+          <a class="nav-link <%= (activePage === 'home') ? 'active' : '' %>" href="/admin/home">หน้าแรก</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <%= (activePage === 'form') ? 'active' : '' %>" href="/form">แจ้งซ่อม</a>
+          <a class="nav-link <%= (activePage === 'work') ? 'active' : '' %>" href="/admin/work">งาน</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <%= (activePage === 'history') ? 'active' : '' %>" href="/history">ประวัติการแจ้งซ่อม</a>
+          <a class="nav-link <%= (activePage === 'history') ? 'active' : '' %>" href="/admin/history">ประวัติงาน</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <%= (activePage === 'manage') ? 'active' : '' %>" href="/admin/manage">จัดการ</a>
         </li>
       </ul>
 
@@ -51,7 +52,7 @@
             <i class="fas fa-angle-down me-3" style="color: #ffffff;"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-            <li><a class="dropdown-item" href="/profile">โปรไฟล์</a></li>
+            <li><a class="dropdown-item" href="/admin/profile">โปรไฟล์</a></li>
             <li><a class="dropdown-item" href="#">ออกจากระบบ</a></li>
           </ul>
         </div>

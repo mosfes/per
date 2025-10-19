@@ -1,0 +1,53 @@
+<%- include('template/admin_header') %>
+
+<div class="container">
+
+  <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+    <h1 class="mb-0">จัดการอุปกรณ์</h1>
+    
+    <a href="#" class="btn btn-success">
+      <i class="fas fa-plus"></i> เพิ่มอุปกรณ์
+    </a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+      
+      <thead class="table-dark text-center">
+        <tr>
+          <th scope="col">รหัสอุปกรณ์</th>
+          <th scope="col">ชื่ออุปกรณ์</th>
+          <th scope="col">อาคาร</th>
+          <th scope="col">ชั้น</th>
+          <th scope="col">จัดการ</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <tr>
+          <td>COM-001</td>
+          <td>คอมพิวเตอร์ตั้งโต๊ะ</td>
+          <td>อาคาร 1</td>
+          <td class="text-center">3</td>
+          <td class="text-center">
+            <button class="btn btn-warning btn-sm">แก้ไข</button>
+            <button class="btn btn-danger btn-sm">ลบ</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>PRJ-002</td>
+          <td>โปรเจคเตอร์</td>
+          <td>อาคาร 3</td>
+          <td class="text-center">5</td>
+          <td class="text-center">
+            <button class="btn btn-warning btn-sm">แก้ไข</button>
+            <button class="btn btn-danger btn-sm">ลบ</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('template/admin_footer') %>
