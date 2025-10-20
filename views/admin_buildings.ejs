@@ -3,11 +3,10 @@
 <div class="container">
 
   <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
-    <h1 class="mb-0">หน้าอาคารAdmin</h1>
-    
-    <a href="#" class="btn btn-primary">
+    <h1 class="mb-0">จัดการอาคาร</h1>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBuildingModal">
       <i class="fas fa-plus"></i> เพิ่มอาคาร
-    </a>
+    </button>
   </div>
 
   <div class="table-responsive">
@@ -22,27 +21,114 @@
       </thead>
       
       <tbody>
+        
+        <% if (locations && locations.length > 0) { %>
+          <% locations.forEach(function(location) { %>
+            <tr>
+              <td><%= location.name %></td>
+              <td class="text-center"><%= location.floor %></td>
+              <td class="text-center">
+                
+                <button class="btn btn-warning btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editModal-<%= location._id %>">
+                  แก้ไข
+                </button>
 
-        <tr>
-          <td>อาคาร 1 (อาคารเรียนรวม)</td>
-          <td class="text-center">5</td>
-          <td class="text-center">
-            <button class="btn btn-warning btn-sm">แก้ไข</button>
-            <button class="btn btn-danger btn-sm">ลบ</button>
-          </td>
-        </tr>
+                <button class="btn btn-danger btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal-<%= location._id %>">
+                  ลบ
+                </button>
 
-        <tr>
-          <td>อาคาร 2 (อาคารสำนักงาน)</td>
-          <td class="text-center">3</td>
-          <td class="text-center">
-            <button class="btn btn-warning btn-sm">แก้ไข</button>
-            <button class="btn btn-danger btn-sm">ลบ</button>
-          </td>
-        </tr>
+              </td>
+            </tr>
+
+            <div class="modal fade" id="editModal-<%= location._id %>" tabindex="-1" aria-labelledby="editBuildingModalLabel-<%= location._id %>" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form action="/admin/buildings/edit/<%= location._id %>" method="POST">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="editBuildingModalLabel-<%= location._id %>">แก้ไขอาคาร</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label for="editBuildingName-<%= location._id %>" class="form-label">ชื่ออาคาร</label>
+                        <input type="text" class="form-control" id="editBuildingName-<%= location._id %>" name="name" value="<%= location.name %>" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="editBuildingFloors-<%= location._id %>" class="form-label">จำนวนชั้น</label>
+                        <input type="number" class="form-control" id="editBuildingFloors-<%= location._id %>" name="floor" min="1" value="<%= location.floor %>" required>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                      <button type="submit" class="btn btn-primary">บันทึกการเปลี่ยนแปลง</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="deleteModal-<%= location._id %>" tabindex="-1" aria-labelledby="deleteModalLabel-<%= location._id %>" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel-<%= location._id %>">ยืนยันการลบ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    คุณแน่ใจหรือไม่ว่าต้องการลบอาคาร: 
+                    <strong><%= location.name %></strong>?
+                    <br>
+                    <small class="text-danger">การกระทำนี้ไม่สามารถย้อนกลับได้</small>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    
+                    <form action="/admin/buildings/delete/<%= location._id %>" method="POST" style="display: inline;">
+                      <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+        <% } else { %>
+          <tr>
+            <td colspan="3" class="text-center">ไม่มีข้อมูลอาคาร</td>
+          </tr>
+        <% } %>
 
       </tbody>
     </table>
+  </div>
+</div>
+
+<div class="modal fade" id="addBuildingModal" tabindex="-1" aria-labelledby="addBuildingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/admin/buildings/add" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addBuildingModalLabel">เพิ่มอาคารใหม่</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="buildingName" class="form-label">ชื่ออาคาร</label>
+            <input type="text" class="form-control" id="buildingName" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="buildingFloors" class="form-label">จำนวนชั้น</label>
+            <input type="number" class="form-control" id="buildingFloors" name="floor" min="1" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+          <button type="submit" class="btn btn-primary">บันทึก</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

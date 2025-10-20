@@ -1,0 +1,393 @@
+<%- include('template/admin_header') %>
+
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+      <h1 class="mb-0">จัดการผู้ใช้</h1>
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
+        <i class="fas fa-user-plus"></i> เพิ่มผู้ใช้
+      </button>
+    </div>
+
+    <% if (errorMessage) { %>
+      <div class="alert alert-danger" role="alert">
+        <i class="fas fa-exclamation-triangle"></i>
+        <%= errorMessage %>
+      </div>
+      <% } %>
+
+        <ul class="nav nav-tabs nav-fill mb-3" id="userTypeTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="general-users-tab" data-bs-toggle="tab" data-bs-target="#general-users"
+              type="button" role="tab" aria-controls="general-users" aria-selected="true">
+              <i class="fas fa-users me-2"></i> ผู้ใช้ทั่วไป
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="admin-users-tab" data-bs-toggle="tab" data-bs-target="#admin-users"
+              type="button" role="tab" aria-controls="admin-users" aria-selected="false">
+              <i class="fas fa-user-shield me-2"></i> แอดมิน
+            </button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="userTypeTabContent">
+
+          <div class="tab-pane fade show active" id="general-users" role="tabpanel" aria-labelledby="general-users-tab">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark text-center">
+                  <tr>
+                    <th scope="col">ชื่อผู้ใช้</th>
+                    <th scope="col">ชื่อ-นามสกุล</th>
+                    <th scope="col" style="width: 25%;">จัดการ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (generalUsers && generalUsers.length> 0) { %>
+                    <% generalUsers.forEach(user=> { %>
+                      <tr>
+                        <td>
+                          <%= user.username %>
+                        </td>
+                        <td>
+                          <%= user.first_name %>
+                            <%= user.last_name %>
+                        </td>
+                        <td class="text-center">
+
+                          <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#editModal-<%= user._id %>">
+                            แก้ไข
+                          </button>
+
+                          <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#changePassModal-<%= user._id %>">
+                            เปลี่ยนรหัสผ่าน
+                          </button>
+
+                          <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal-<%= user._id %>">
+                            ลบ
+                          </button>
+                        </td>
+                      </tr>
+
+                      <div class="modal fade" id="editModal-<%= user._id %>" tabindex="-1"
+                        aria-labelledby="editModalLabel-<%= user._id %>" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <form action="/admin/users/edit/<%= user._id %>" method="POST">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel-<%= user._id %>">แก้ไขผู้ใช้</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                  aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="mb-3">
+                                  <label for="edit_username_<%= user._id %>" class="form-label">ชื่อผู้ใช้
+                                    (Username)</label>
+                                  <input type="text" class="form-control" id="edit_username_<%= user._id %>"
+                                    name="username" value="<%= user.username %>" required>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="edit_FirstName_<%= user._id %>" class="form-label">ชื่อ</label>
+                                  <input type="text" class="form-control" id="edit_FirstName_<%= user._id %>"
+                                    name="FirstName" value="<%= user.first_name %>" required>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="edit_LastName_<%= user._id %>" class="form-label">นามสกุล</label>
+                                  <input type="text" class="form-control" id="edit_LastName_<%= user._id %>"
+                                    name="LastName" value="<%= user.last_name %>" required>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="edit_userType_<%= user._id %>" class="form-label">ประเภทผู้ใช้</label>
+                                  <select class="form-select" id="edit_userType_<%= user._id %>" name="userType"
+                                    required>
+                                    <option value="user" selected>ผู้ใช้ทั่วไป</option>
+                                    <option value="admin">แอดมิน</option>
+                                  </select>
+                                </div>
+                                <small class="text-muted">หมายเหตุ: ไม่สามารถแก้ไขรหัสผ่านจากหน้านี้ได้</small>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-primary">บันทึกการเปลี่ยนแปลง</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="modal fade" id="changePassModal-<%= user._id %>" tabindex="-1"
+                        aria-labelledby="changePassModalLabel-<%= user._id %>" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <form action="/admin/users/changepassword/<%= user._id %>" method="POST">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="changePassModalLabel-<%= user._id %>">
+                                  เปลี่ยนรหัสผ่านสำหรับ: <%= user.username %>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                  aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="mb-3">
+                                  <label for="newPassword-<%= user._id %>" class="form-label">รหัสผ่านใหม่</label>
+                                  <input type="password" class="form-control" id="newPassword-<%= user._id %>"
+                                    name="newPassword" required>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-primary">บันทึกรหัสผ่านใหม่</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="modal fade" id="deleteModal-<%= user._id %>" tabindex="-1"
+                        aria-labelledby="deleteModalLabel-<%= user._id %>" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="deleteModalLabel-<%= user._id %>">ยืนยันการลบ</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              คุณแน่ใจหรือไม่ว่าต้องการลบผู้ใช้:
+                              <strong>
+                                <%= user.username %>
+                              </strong>?
+                              <br>
+                              <small class="text-danger">การกระทำนี้ไม่สามารถย้อนกลับได้</small>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                              <form action="/admin/users/delete/<%= user._id %>" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <% }) %>
+                        <% } else { %>
+                          <tr>
+                            <td colspan="3" class="text-center">ไม่พบข้อมูลผู้ใช้ทั่วไป</td>
+                          </tr>
+                          <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="admin-users" role="tabpanel" aria-labelledby="admin-users-tab">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark text-center">
+                  <tr>
+                    <th scope="col">ชื่อผู้ใช้ (Admin)</th>
+                    <th scope="col">ชื่อ-นามสกุล</th>
+                    <th scope="col" style="width: 25%;">จัดการ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (adminUsers && adminUsers.length> 0) { %>
+                    <% adminUsers.forEach(user=> { %>
+                      <tr>
+                        <td>
+                          <%= user.username %>
+                        </td>
+                        <td>
+                          <%= user.first_name %>
+                            <%= user.last_name %>
+                        </td>
+                        <td class="text-center">
+
+                          <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#editModal-<%= user._id %>">
+                            แก้ไข
+                          </button>
+
+                          <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#changePassModal-<%= user._id %>">
+                            เปลี่ยนรหัสผ่าน
+                          </button>
+
+                          <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal-<%= user._id %>">
+                            ลบ
+                          </button>
+                        </td>
+                      </tr>
+
+                      <div class="modal fade" id="editModal-<%= user._id %>" tabindex="-1"
+                        aria-labelledby="editModalLabel-<%= user._id %>" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <form action="/admin/users/edit/<%= user._id %>" method="POST">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel-<%= user._id %>">แก้ไขผู้ใช้</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                  aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="mb-3">
+                                  <label for="edit_username_<%= user._id %>" class="form-label">ชื่อผู้ใช้
+                                    (Username)</label>
+                                  <input type="text" class="form-control" id="edit_username_<%= user._id %>"
+                                    name="username" value="<%= user.username %>" required>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="edit_FirstName_<%= user._id %>" class="form-label">ชื่อ</label>
+                                  <input type="text" class="form-control" id="edit_FirstName_<%= user._id %>"
+                                    name="FirstName" value="<%= user.first_name %>" required>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="edit_LastName_<%= user._id %>" class="form-label">นามสกุล</label>
+                                  <input type="text" class="form-control" id="edit_LastName_<%= user._id %>"
+                                    name="LastName" value="<%= user.last_name %>" required>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="edit_userType_<%= user._id %>" class="form-label">ประเภทผู้ใช้</label>
+                                  <select class="form-select" id="edit_userType_<%= user._id %>" name="userType"
+                                    required>
+                                    <option value="user">ผู้ใช้ทั่วไป</option>
+                                    <option value="admin" selected>แอดมิน</option>
+                                  </select>
+                                </div>
+                                <small class="text-muted">หมายเหตุ: ไม่สามารถแก้ไขรหัสผ่านจากหน้านี้ได้</small>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-primary">บันทึกการเปลี่ยนแปลง</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="modal fade" id="changePassModal-<%= user._id %>" tabindex="-1"
+                        aria-labelledby="changePassModalLabel-<%= user._id %>" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <form action="/admin/users/changepassword/<%= user._id %>" method="POST">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="changePassModalLabel-<%= user._id %>">
+                                  เปลี่ยนรหัสผ่านสำหรับ: <%= user.username %>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                  aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="mb-3">
+                                  <label for="newPassword-<%= user._id %>" class="form-label">รหัสผ่านใหม่</label>
+                                  <input type="password" class="form-control" id="newPassword-<%= user._id %>"
+                                    name="newPassword" required>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" class="btn btn-primary">บันทึกรหัสผ่านใหม่</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="modal fade" id="deleteModal-<%= user._id %>" tabindex="-1"
+                        aria-labelledby="deleteModalLabel-<%= user._id %>" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="deleteModalLabel-<%= user._id %>">ยืนยันการลบ</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              คุณแน่ใจหรือไม่ว่าต้องการลบผู้ใช้:
+                              <strong>
+                                <%= user.username %>
+                              </strong>?
+                              <br>
+                              <small class="text-danger">การกระทำนี้ไม่สามารถย้อนกลับได้</small>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                              <form action="/admin/users/delete/<%= user._id %>" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <% }) %>
+                        <% } else { %>
+                          <tr>
+                            <td colspan="3" class="text-center">ไม่พบข้อมูลผู้ใช้แอดมิน</td>
+                          </tr>
+                          <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+  </div>
+  <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="addUserModalLabel">เพิ่มผู้ใช้ใหม่</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <form id="addUserForm" action="/admin/users/add" method="POST">
+
+            <div class="mb-3">
+              <label for="username" class="form-label">ชื่อผู้ใช้ (Username)</label>
+              <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="FirstName" class="form-label">ชื่อ</label>
+              <input type="text" class="form-control" id="FirstName" name="FirstName" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="LastName" class="form-label">นามสกุล</label>
+              <input type="text" class="form-control" id="LastName" name="LastName" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">รหัสผ่าน</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="userType" class="form-label">ประเภทผู้ใช้</label>
+              <select class="form-select" id="userType" name="userType" required>
+                <option value="" selected disabled>-- กรุณาเลือกประเภท --</option>
+                <option value="user">ผู้ใช้ทั่วไป</option>
+                <option value="admin">แอดมิน</option>
+              </select>
+            </div>
+
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+          <button type="submit" class="btn btn-primary" form="addUserForm">บันทึก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('template/admin_footer') %>
