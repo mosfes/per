@@ -47,34 +47,42 @@
                             <h2 class="fw-bold mb-2">เข้าสู่ระบบ</h2>
                             <p class="text-white-50 mb-5">ระบบแจ้งซ่อมออนไลน์วิทยาลัยการคอมพิวเตอร์</p>
 
-                            <form action="#" method="POST">
-
-                                <div class="form-group text-start mb-4">
-                                    <label class="form-label" for="typeEmailX">ผู้ใช้ (Username)</label>
-                                    <input type="email" id="typeEmailX" class="form-control form-control-lg"
-                                        placeholder="รหัสนักศึกษาหรือชื่อผู้ใช้" required />
+                            <% if (typeof errorMessage !=='undefined' && errorMessage) { %>
+                                <div class="alert alert-danger" role="alert">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <%= errorMessage %>
                                 </div>
+                                <% } %>
+                                    <form action="/login" method="POST">
 
-                                <div class="form-group text-start mb-4">
-                                    <label class="form-label" for="typePasswordX">รหัสผ่าน</label>
-                                    <input type="password" id="typePasswordX" class="form-control form-control-lg"
-                                        placeholder="รหัสผ่าน" required />
-                                </div>
+                                        <div class="form-group text-start mb-4">
+                                            <label class="form-label" for="typeEmailX">ผู้ใช้ (Username)</label>
+                                            <input type="text" id="typeEmailX" class="form-control form-control-lg"
+                                                placeholder="รหัสนักศึกษาหรือชื่อผู้ใช้" required name="username" />
+                                        </div>
 
-                                <p class="small mb-4 text-end"><a class="text-white-50" href="#!">ลืมรหัสผ่าน?</a></p>
+                                        <div class="form-group text-start mb-4">
+                                            <label class="form-label" for="typePasswordX">รหัสผ่าน</label>
+                                            <input type="password" id="typePasswordX"
+                                                class="form-control form-control-lg" placeholder="รหัสผ่าน" required
+                                                name="password" />
+                                        </div>
 
-                                <div class="d-grid gap-2 mb-4">
-                                    <button class="btn btn-outline-light btn-lg px-5"
-                                        type="submit">เข้าสู่ระบบ</button>
-                                </div>
+                                        <p class="small mb-4 text-end"><a class="text-white-50"
+                                                href="#!">ลืมรหัสผ่าน?</a></p>
 
-                            </form>
+                                        <div class="d-grid gap-2 mb-4">
+                                            <button class="btn btn-outline-light btn-lg px-5"
+                                                type="submit">เข้าสู่ระบบ</button>
+                                        </div>
 
-                            <hr class="my-4" style="color: #eee;">
+                                    </form>
 
-                            <div class="text-center">
-                            <a href="/register" class="text-white-50">สมัครสมาชิก</a>
-                            </div>
+                                    <hr class="my-4" style="color: #eee;">
+
+                                    <div class="text-center">
+                                        <a href="/register" class="text-white-50">สมัครสมาชิก</a>
+                                    </div>
 
                         </div>
                     </div>
