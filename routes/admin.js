@@ -142,7 +142,7 @@ router.post('/users/add', async function(req, res, next) {
   } catch (err) {
     next(err);
   }
-});
+  });
 
 
 
@@ -215,3 +215,4 @@ router.post('/users/changepassword/:id', async function(req, res, next) {
 });
 
 module.exports = router;
+

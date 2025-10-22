@@ -104,5 +104,15 @@ router.post('/register/add', async function(req, res, next) {
   }
   });
 
+  router.get('/logout', (req, res, next) => {
+  req.session.destroy((err) => { // 1. สั่งทำลาย session
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/login'); // 2. กลับไปหน้า login
+  });
+});
 
 module.exports = router;
+
+

@@ -34,13 +34,13 @@
 
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link <%= (activePage === 'home') ? 'active' : '' %>"" href="/home">หน้าแรก</a>
+          <a class="nav-link <%= (activePage === 'home') ? 'active' : '' %>"" href="/user/home">หน้าแรก</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <%= (activePage === 'form') ? 'active' : '' %>" href="/form">แจ้งซ่อม</a>
+          <a class="nav-link <%= (activePage === 'form') ? 'active' : '' %>" href="/user/form">แจ้งซ่อม</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <%= (activePage === 'history') ? 'active' : '' %>" href="/history">ประวัติการแจ้งซ่อม</a>
+          <a class="nav-link <%= (activePage === 'history') ? 'active' : '' %>" href="/user/history">ประวัติการแจ้งซ่อม</a>
         </li>
       </ul>
 
@@ -51,8 +51,8 @@
             <i class="fas fa-angle-down me-3" style="color: #ffffff;"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-            <li><a class="dropdown-item" href="/profile">โปรไฟล์</a></li>
-            <li><a class="dropdown-item" href="#">ออกจากระบบ</a></li>
+            <li><a class="dropdown-item" href="/user/profile">โปรไฟล์</a></li>
+            <li><a class="dropdown-item" href="/logout">ออกจากระบบ</a></li>
           </ul>
         </div>
       </div>

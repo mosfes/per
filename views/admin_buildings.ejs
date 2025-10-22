@@ -15,7 +15,7 @@
       <thead class="table-dark text-center">
         <tr>
           <th scope="col">ชื่ออาคาร</th>
-          <th scope="col" style="width: 20%;">จำนวนชั้น</th>
+          <th scope="col" style="width: 20%;">ชั้น</th>
           <th scope="col" style="width: 20%;">จัดการ</th>
         </tr>
       </thead>
@@ -58,7 +58,7 @@
                         <input type="text" class="form-control" id="editBuildingName-<%= location._id %>" name="name" value="<%= location.name %>" required>
                       </div>
                       <div class="mb-3">
-                        <label for="editBuildingFloors-<%= location._id %>" class="form-label">จำนวนชั้น</label>
+                        <label for="editBuildingFloors-<%= location._id %>" class="form-label">ชั้น</label>
                         <input type="number" class="form-control" id="editBuildingFloors-<%= location._id %>" name="floor" min="1" value="<%= location.floor %>" required>
                       </div>
                     </div>
@@ -119,7 +119,7 @@
             <input type="text" class="form-control" id="buildingName" name="name" required>
           </div>
           <div class="mb-3">
-            <label for="buildingFloors" class="form-label">จำนวนชั้น</label>
+            <label for="buildingFloors" class="form-label">ชั้น</label>
             <input type="number" class="form-control" id="buildingFloors" name="floor" min="1" required>
           </div>
         </div>
